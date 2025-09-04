@@ -33,6 +33,10 @@ SOFTWARE WILL NOT INFRINGE ANY PATENT, TRADEMARK OR OTHER RIGHTS.
 ******************************************************************************/
 #include "potential/2b/x2b-v9x.h"
 
+//VTS
+#include <iostream>
+//VTE
+
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace {
@@ -1505,7 +1509,9 @@ double x2b_v9x::eval(const double* w1, const double* w2, const size_t nd) {
     }
     std::cerr << "Output energy: " << e << std::endl;
 #endif
-
+//VTS
+    std::cerr << "Output energy: " << e << std::endl;
+//VTE
     return e;
 }
 
