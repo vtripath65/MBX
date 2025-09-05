@@ -229,6 +229,9 @@ size_t SetUpMonomers(std::vector<std::string> mon, std::vector<size_t> &sites, s
             } else if (mon[i] == "mbpbe") {
                 sites.push_back(4);
                 nat.push_back(3);
+            } else if (mon[i] == "h2o_revpbe0d3_def2svpd" || mon[i] == "h2o_revpbe0d3_def2svpd_dir") {
+                sites.push_back(3);
+                nat.push_back(3);
                 // =====>> BEGIN SECTION SITES <<=====
                 // ==> PASTE YOUR CODE BELOW <==
                 // END SECTION SITES

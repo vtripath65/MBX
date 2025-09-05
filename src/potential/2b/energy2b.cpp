@@ -34,6 +34,9 @@ SOFTWARE WILL NOT INFRINGE ANY PATENT, TRADEMARK OR OTHER RIGHTS.
 
 #include "energy2b.h"
 
+//VTS
+#include<time.h>
+//VTE
 /**
  * @file energy2b.cpp
  * @brief Contains the implementation of the 2b energy calls
@@ -184,6 +187,12 @@ double get_2b_energy(std::string mon1, std::string mon2, size_t nm, std::vector<
     } else if (mon1 == "he" and mon2 == "he") {
         x2b_A1_A1_deg23::x2b_A1_A1_v1x pot(mon1,mon2);
         return pot.eval(xyz1.data(), xyz2.data(), nm);
+    } else if (mon1 == "h2o_revpbe0d3_def2svpd" and mon2 == "h2o_revpbe0d3_def2svpd") {
+        mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot(mon1,mon2);
+        energy=pot.eval(xyz1.data(), xyz2.data(), nm);
+    } else if (mon1 == "h2o_revpbe0d3_def2svpd_dir" and mon2 == "h2o_revpbe0d3_def2svpd_dir") {
+        mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot(mon1,mon2);
+        energy=pot.eval_direct(xyz1.data(), xyz2.data(), nm);
         // =====>> BEGIN SECTION 2B_NO_GRADIENT <<=====
         // =====>> PASTE YOUR CODE BELOW <<=====
 
@@ -253,6 +262,10 @@ double get_2b_energy(std::string mon1, std::string mon2, size_t nm, std::vector<
         swaped = true;
     }
 
+//VTS
+    static clock_t time_start;
+    double time_cum=0.0;
+//VTE
     double energy = 0.0;
     // Note: in the conditional, mon2 >= mon1 ALWAYS
     if (mon1 == "h2o" and mon2 == "h2o") {
@@ -368,6 +381,28 @@ double get_2b_energy(std::string mon1, std::string mon2, size_t nm, std::vector<
     } else if (mon1 == "he" and mon2 == "he") {
         x2b_A1_A1_deg23::x2b_A1_A1_v1x pot(mon1,mon2);
         energy = pot.eval(xyz1.data(), xyz2.data(), grad1.data(), grad2.data(), nm, virial);
+    } else if (mon1 == "h2o_revpbe0d3_def2svpd" and mon2 == "h2o_revpbe0d3_def2svpd") {
+//VTS
+        time_start = clock();
+//VTE
+        mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot(mon1,mon2);
+        energy=pot.eval(xyz1.data(), xyz2.data(), grad1.data(), grad2.data(), nm, virial);
+//VTS
+        std::cerr << "2B energy = " << energy << " ,nm = " << nm << std::endl;
+        time_cum += time_cum+((double)(clock() - time_start))/CLOCKS_PER_SEC;
+        std::cerr << "duration  of optimized = " << time_cum << " sec" << std::endl;
+//VTE
+    } else if (mon1 == "h2o_revpbe0d3_def2svpd_dir" and mon2 == "h2o_revpbe0d3_def2svpd_dir") {
+//VTS
+        time_start = clock();
+//VTE
+        mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot(mon1,mon2);
+        energy=pot.eval_direct(xyz1.data(), xyz2.data(), grad1.data(), grad2.data(), nm, virial);
+//VTS
+        std::cerr << "2B energy = " << energy << " ,nm = " << nm << std::endl;
+        time_cum += time_cum+((double)(clock() - time_start))/CLOCKS_PER_SEC;
+        std::cerr << "duration  of direct = " << time_cum << " sec" << std::endl;
+//VTE
         // =====>> BEGIN SECTION 2B_GRADIENT <<=====
         // ====>> PASTE YOUR CODE BELOW <<====
 
