@@ -5961,7 +5961,7 @@ t7964+t68*t8796+t72*t7964+t75*t7964+t78*t8796+t82*t8796)*t241)*t241)*t241+
 t10063*t150+t10245*t84;
     return(t7583+t10247);
 }
-
+/*
 double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double x[31], const double a[1208])
 {
     double p[1208];
@@ -7181,6 +7181,6 @@ double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double x
     return energy;
 
 }
-
+*/
 } // namespace mbnrg_A1B2Z2_A1B2Z2_deg4
 

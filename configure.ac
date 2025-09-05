@@ -176,7 +176,7 @@ AC_CHECK_PROG([NVCC], [nvcc], [nvcc])
 AC_CHECK_PROG([NVIDIA_SMI], [nvidia-smi], [yes], [no])
 if test "x$NVIDIA_SMI" = "xyes"; then
   CUDA_ARCH=`nvidia-smi --query-gpu=compute_cap --format=csv,noheader | head -n1 | tr -d '.'`
-  CUDA_NVCCFLAGS="-gencode arch=compute_${CUDA_ARCH},code=sm_${CUDA_ARCH} $CUDA_NVCCFLAGS"
+  CUDA_NVCCFLAGS="-gencode arch=compute_${CUDA_ARCH},code=sm_${CUDA_ARCH} -fPIC"
 
   CUDA_CFLAGS="-I/usr/local/cuda/include"
   CUDA_LIBS="-L/usr/local/cuda/lib64 -lcudart"
