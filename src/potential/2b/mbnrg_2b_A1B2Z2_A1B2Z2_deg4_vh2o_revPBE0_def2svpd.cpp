@@ -1,5 +1,5 @@
 #include "mbnrg_2b_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd.h"
-
+#include <iostream>
 ////////////////////////////////////////////////////////////////////////////////
 
 namespace mbnrg_A1B2Z2_A1B2Z2_deg4 {
@@ -1889,6 +1889,8 @@ double mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double 
         double sw12 = f_switch(d12r, gsw12);
 
         sw = sw12;
+
+//        std::cout << "j = " << j << std::endl;
 
         energies[j] = my_poly.eval_direct(xs,coefficients.data(),gxs);
         energies_sw[j] = energies[j]*sw;

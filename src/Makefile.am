@@ -6,6 +6,8 @@ endif
 # Libraries
 lib_LTLIBRARIES = libmbx.la
 
+SUFFIXES = .cu
+
 # Library sources
 # Sources from tools
 tools_src = tools/math_tools.cpp tools/mpi_helper.cpp tools/mt19937.cpp tools/pbctools.cpp tools/properties.cpp tools/random-rotation.cpp tools/variable.cpp tools/water_monomer_lp.cpp tools/xmin.cpp
@@ -28,13 +30,13 @@ oneb_sources = potential/1b/energy1b.cpp potential/1b/mbnrg_1b_A1B3_deg5_v1.cpp 
 twob_sources = potential/2b/energy2b.cpp potential/2b/mbnrg_2b_A1_A1_deg9_v1.cpp potential/2b/mbnrg_2b_A1_B1C2X2_deg5_v1.cpp potential/2b/mbnrg_2b_A1_B1_deg9_v1.cpp potential/2b/mbnrg_2b_A1_B2_deg7_v1.cpp potential/2b/mbnrg_2b_A1B2Z2_C2_deg5_v1.cpp potential/2b/mbnrg_2b_A1B3_A1B3_deg4_v1.cpp potential/2b/mbnrg_2b_A2_A2_deg6_v1.cpp potential/2b/poly_2b_A1_A1_deg9_grad_v1.cpp potential/2b/poly_2b_A1_A1_deg9_nograd_v1.cpp potential/2b/poly_2b_A1_B1C2X2_deg5_grad_v1.cpp potential/2b/poly_2b_A1_B1C2X2_deg5_nograd_v1.cpp potential/2b/poly_2b_A1_B1_deg9_grad_v1.cpp potential/2b/poly_2b_A1_B1_deg9_nograd_v1.cpp potential/2b/poly_2b_A1B2_A1B2_v1.cpp potential/2b/poly_2b_A1B2_A1B2_v1x.cpp potential/2b/poly_2b_A1B2C4_D1E2_deg3_v1.cpp potential/2b/poly_2b_A1B2C4_D1E2_deg3_v1x.cpp potential/2b/poly_2b_A1_B2_deg7_grad_v1.cpp potential/2b/poly_2b_A1_B2_deg7_nograd_v1.cpp potential/2b/poly_2b_A1B2Z2_C1D2_v1.cpp potential/2b/poly_2b_A1B2Z2_C1D2_v1x.cpp potential/2b/poly_2b_A1B2Z2_C1D4_deg3_exp0_v1.cpp potential/2b/poly_2b_A1B2Z2_C1D4_deg3_exp0_v1x.cpp potential/2b/poly_2b_A1B2Z2_C2_deg5_grad_v1.cpp potential/2b/poly_2b_A1B2Z2_C2_deg5_nograd_v1.cpp potential/2b/poly-2b-A1B2Z2_C-v1.cpp potential/2b/poly-2b-A1B2Z2_C-v1x.cpp potential/2b/poly_2b_A1B3_A1B3_deg4_grad_v1.cpp potential/2b/poly_2b_A1B3_A1B3_deg4_nograd_v1.cpp potential/2b/poly_2b_A1B4_A1B4_deg4_exp0_v1.cpp potential/2b/poly_2b_A1B4_A1B4_deg4_exp0_v1x.cpp potential/2b/poly_2b_A2_A2_deg6_grad_v1.cpp potential/2b/poly_2b_A2_A2_deg6_nograd_v1.cpp potential/2b/poly-2b-v6x.cpp potential/2b/poly-2b-v6x-nogrd.cpp potential/2b/x2b_A1B2_A1B2_v1x.cpp potential/2b/x2b_A1B2C4_D1E2_deg3_v1x.cpp potential/2b/x2b_A1B2Z2_C1D2_v1x.cpp potential/2b/x2b_A1B2Z2_C1D4_deg3_exp0_v1x.cpp potential/2b/x2b-A1B2Z2_C-v1x.cpp potential/2b/x2b_A1B4_A1B4_deg4_exp0_v1x.cpp potential/2b/x2b-v9x.cpp potential/2b/mbnrg_2b_A1B2Z2_A1B2Z2_deg4_vmbpbe.cpp potential/2b/poly_2b_A1B2Z2_A1B2Z2_deg4_nograd_vmbpbe.cpp potential/2b/poly_2b_A1B2Z2_A1B2Z2_deg4_grad_vmbpbe.cpp potential/2b/mbnrg_2b_A1B4_C1D2_deg4_v1.cpp potential/2b/poly_2b_A1B4_C1D2_deg4_nograd_v1.cpp potential/2b/poly_2b_A1B4_C1D2_deg4_grad_v1.cpp potential/2b/x2b_A1_A1_deg23_v1x.cpp potential/2b/poly_2b_A1_A1_deg23_v1.cpp potential/2b/poly_2b_A1_A1_deg23_v1x.cpp potential/2b/x2b_A1B2Z2_C1_deg5_v1x.cpp potential/2b/poly_2b_A1B2Z2_C1_deg5_v1.cpp potential/2b/poly_2b_A1B2Z2_C1_deg5_v1x.cpp potential/2b/mbnrg_2b_A1_B1C2X2_deg6_v1.cpp potential/2b/poly_2b_A1_B1C2X2_deg6_grad_v1.cpp potential/2b/poly_2b_A1_B1C2X2_deg6_nograd_v1.cpp potential/2b/mbnrg_2b_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd.cpp potential/2b/poly_2b_A1B2Z2_A1B2Z2_deg4_grad_vh2o_revPBE0_def2svpd.cpp potential/2b/poly_2b_A1B2Z2_A1B2Z2_deg4_nograd_vh2o_revPBE0_def2svpd.cpp
 
 # 2B CUDA src
-twob_cu = potential/2b/poly_2b_A1B2Z2_A1B2Z2_deg4_nograd_vh2o_revPBE0_def2svpd.cu
+twob_cu = potential/2b/poly_2b_A1B2Z2_A1B2Z2_deg4_nograd_vh2o_revPBE0_def2svpd_cu.cu potential/2b/poly_2b_A1B2Z2_A1B2Z2_deg4_grad_vh2o_revPBE0_def2svpd_cu.cu
 
 # 3B poly sources
-threeb_sources = potential/3b/energy3b.cpp potential/3b/mbnrg_3b_A1_B1C2X2_B1C2X2_deg4_v1.cpp potential/3b/mbnrg_3b_A1B2_A1B2_A1B2_deg4_v1.cpp potential/3b/mbnrg_3b_A1B2C4_D1E2_D1E2_deg3_v1.cpp potential/3b/mbnrg_3b_A1B4_C1D2_C1D2_deg3_v1.cpp potential/3b/poly_3b_A1_B1C2X2_B1C2X2_deg4_grad_v1.cpp potential/3b/poly_3b_A1_B1C2X2_B1C2X2_deg4_nograd_v1.cpp potential/3b/poly_3b_A1B2_A1B2_A1B2_deg4_grad_v1.cpp potential/3b/poly_3b_A1B2_A1B2_A1B2_deg4_nograd_v1.cpp potential/3b/poly_3b_A1B4_C1D2_C1D2_deg3_grad_v1.cpp potential/3b/poly_3b_A1B4_C1D2_C1D2_deg3_nograd_v1.cpp potential/3b/poly-3b-h2o-ion-v1x_deg4_filtered.cpp potential/3b/poly-3b-v2x.cpp potential/3b/poly-3b-v2x-nogrd.cpp potential/3b/x3b-h2o-ion-v1x-deg4-filtered.cpp potential/3b/x3b-v2x.cpp potential/3b/poly_3b_A1B2_A1B2_A1B2_deg4_grad_vmbpbe.cpp potential/3b/mbnrg_3b_A1B2_A1B2_A1B2_deg4_vmbpbe.cpp potential/3b/poly_3b_A1B2_A1B2_A1B2_deg4_nograd_vmbpbe.cpp 
+#threeb_sources = potential/3b/energy3b.cpp potential/3b/mbnrg_3b_A1_B1C2X2_B1C2X2_deg4_v1.cpp potential/3b/mbnrg_3b_A1B2_A1B2_A1B2_deg4_v1.cpp potential/3b/mbnrg_3b_A1B2C4_D1E2_D1E2_deg3_v1.cpp potential/3b/mbnrg_3b_A1B4_C1D2_C1D2_deg3_v1.cpp potential/3b/poly_3b_A1_B1C2X2_B1C2X2_deg4_grad_v1.cpp potential/3b/poly_3b_A1_B1C2X2_B1C2X2_deg4_nograd_v1.cpp potential/3b/poly_3b_A1B2_A1B2_A1B2_deg4_grad_v1.cpp potential/3b/poly_3b_A1B2_A1B2_A1B2_deg4_nograd_v1.cpp potential/3b/poly_3b_A1B4_C1D2_C1D2_deg3_grad_v1.cpp potential/3b/poly_3b_A1B4_C1D2_C1D2_deg3_nograd_v1.cpp potential/3b/poly-3b-h2o-ion-v1x_deg4_filtered.cpp potential/3b/poly-3b-v2x.cpp potential/3b/poly-3b-v2x-nogrd.cpp potential/3b/x3b-h2o-ion-v1x-deg4-filtered.cpp potential/3b/x3b-v2x.cpp potential/3b/poly_3b_A1B2_A1B2_A1B2_deg4_grad_vmbpbe.cpp potential/3b/mbnrg_3b_A1B2_A1B2_A1B2_deg4_vmbpbe.cpp potential/3b/poly_3b_A1B2_A1B2_A1B2_deg4_nograd_vmbpbe.cpp 
 
 # 4B poly sources
-fourb_sources = potential/4b/energy4b.cpp  potential/4b/mbnrg_4b_A1B2_A1B2_A1B2_A1B2_deg4_v1.cpp  potential/4b/poly_4b_A1B2_A1B2_A1B2_A1B2_deg4_grad_v1.cpp  potential/4b/poly_4b_A1B2_A1B2_A1B2_A1B2_deg4_nograd_v1.cpp
+#fourb_sources = potential/4b/energy4b.cpp  potential/4b/mbnrg_4b_A1B2_A1B2_A1B2_A1B2_deg4_v1.cpp  potential/4b/poly_4b_A1B2_A1B2_A1B2_A1B2_deg4_grad_v1.cpp  potential/4b/poly_4b_A1B2_A1B2_A1B2_A1B2_deg4_nograd_v1.cpp
 
 # Electrostatics sources
 elec_sources = potential/electrostatics/electrostatics.cpp potential/electrostatics/fields.cpp potential/electrostatics/gammq.cpp
@@ -52,22 +54,29 @@ ff_sources = potential/force_field/angles.cpp potential/force_field/bond.cpp pot
 lj_sources = potential/lj/lj.cpp potential/lj/ljtools.cpp
 
 # Potential sources
-potential_src = $(oneb_sources) $(twob_sources) $(threeb_sources) $(fourb_sources) $(elec_sources) $(disp_sources) $(buck_sources) $(ff_sources) $(lj_sources)
+#potential_src = $(oneb_sources) $(twob_sources) $(threeb_sources) $(fourb_sources) $(elec_sources) $(disp_sources) $(buck_sources) $(ff_sources) $(lj_sources)
+potential_src = $(oneb_sources) $(twob_sources) $(twob_cu) $(elec_sources) $(disp_sources) $(buck_sources) $(ff_sources) $(lj_sources)
 
-libmbx_la_SOURCES = $(tools_src) $(iotools_src) $(bblock_src) $(potential_src) $(twob_cu)
+libmbx_la_SOURCES = $(tools_src) $(iotools_src) $(bblock_src) $(potential_src)
 libmbx_la_LIBADD = liba1b2c4.la 
 
 # Library extra flags
 libmbx_la_CPPFLAGS = $(CPPFLAGS) $(MPIFLAGS) $(OPENMP_CXXFLAGS) $(EXTRA_CXXFLAGS_AM)
 libmbx_la_LDFLAGS = $(LDFLAGS) $(LIBS) $(EXTRA_LDFLAGS_AM) $(CUDA_LIBS)
 
-SUFFIXES = .cu
 .cu.o:
-	$(NVCC) $(CUDA_NVCCFLAGS) $(libmbx_la_CPPFLAGS) -c $< -o $@
+	@echo "Compiling CUDA file $<"
+	nvcc -arch=sm_75 -c -o $@ $<
 
-$(info NVCC = $(NVCC))
-$(info CUDA flags = $(CUDA_NVCCFLAGS))
-$(info libmbx sources = $(libmbx_la_SOURCES))
+.cu.lo:
+	@echo "Compiling CUDA file $<"
+#	$(NVCC) -c $(CUDA_NVCCFLAGS) $(CUDAFLAGS) $(CXXFLAGS) -Xcompiler -fPIC -o $@ $<
+#	$(LIBTOOL) --tag=CXX --mode=compile $(NVCC) $(CUDAFLAGS) $(CUDA_NVCCFLAGS) -I$(srcdir) -I$(top_srcdir)/src -o $@ -c $<
+#	@mkdir -p $(dir $@)/.deps
+#	$(LIBTOOL) --tag=CXX --mode=compile $(NVCC) -c $(CUDA_NVCCFLAGS) $(CUDAFLAGS) $(CXXFLAGS) -MD -MP -MF $(dir $@)/.deps/$(notdir $@:.lo=.Tpo) -MT $@ -o $@ $<
+#	mv -f $(dir $@)/.deps/$(notdir $@:.lo=.Tpo) $(dir $@)/.deps/$(notdir $@:.lo=.Plo)
+	$(LIBTOOL) --tag=CXX --mode=compile $(NVCC) -c $(CUDA_NVCCFLAGS) $(CUDAFLAGS) $(CXXFLAGS) -MD -MP -MF $(dir $@)/.deps/$(patsubst %.lo,%.Tpo,$(notdir $@)) -MT $(dir $@)/$(notdir $@) -o $(dir $@)/$(notdir $@) $<
+	mv -f $(dir $@)/.deps/$(patsubst %.lo,%.Tpo,$(notdir $@)) $(dir $@)/.deps/$(patsubst %.lo,%.Plo,$(notdir $@))
 
 # Headers (the ‘nobase_’ prefix can be used to circumvent this path stripping)
 nobase_include_HEADERS = tools/*.h io_tools/*.h bblock/*.h potential/1b/*.h potential/2b/*.h potential/3b/*.h potential/4b/*.h potential/buckingham/*.h potential/dispersion/*.h potential/electrostatics/*.h potential/force_field/*.h potential/lj/*.h json/json.h kdtree/*.h* 

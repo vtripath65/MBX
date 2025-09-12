@@ -1510,7 +1510,7 @@ double x2b_v9x::eval(const double* w1, const double* w2, const size_t nd) {
     std::cerr << "Output energy: " << e << std::endl;
 #endif
 //VTS
-    std::cerr << "Output energy: " << e << std::endl;
+//    std::cerr << "Output energy: " << e << std::endl;
 //VTE
     return e;
 }

@@ -82,9 +82,7 @@ struct poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd {
      * @param[in] a Double array of 1208 elements with the linear parameters of the polynomial
      * @return Value of the polynomial
      */
-    double eval_direct(const double x[31],
-                     const double a[1208]);
-
+    double eval_direct(const double x[31],const double a[1208]);
     /**
      * @brief Evaluates the polynomial of degree 4 for A1B2Z2_A1B2Z2 symmetry.
      *

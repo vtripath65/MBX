@@ -35,6 +35,8 @@ SOFTWARE WILL NOT INFRINGE ANY PATENT, TRADEMARK OR OTHER RIGHTS.
 
 #include "poly_2b_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd.h"
 
+#include <iostream>
+
 /**
  * @file poly_2b_A1B2Z2_A1B2Z2_deg4_grad_vh2o_revPBE0_def2svpd.cpp
  * @brief Contains the implementation of the polynomials with gradients for symmetry A1B2Z2_A1B2Z2
@@ -15801,7 +15803,7 @@ t18888+t5758)*t103+t19149*t165+(t18892+t5758)*t179+t5816*t289+t5816*t737+t21103
     g[30] = t20912+t21143;
     return t4370+t10247;
 }
-
+/*
 double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double x[31], const double a[1208], double g[31])
 {
     double p[1208];
@@ -31465,6 +31467,6 @@ double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double x
     return energy;
 
 }
-
+*/
 } // namespace mbnrg_A1B2Z2_A1B2Z2_deg4
 

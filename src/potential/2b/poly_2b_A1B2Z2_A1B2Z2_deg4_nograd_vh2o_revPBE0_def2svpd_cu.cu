@@ -34,7 +34,8 @@ SOFTWARE WILL NOT INFRINGE ANY PATENT, TRADEMARK OR OTHER RIGHTS.
 ******************************************************************************/
 
 #include "poly_2b_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd.h"
-#include <cuda_runtime.h>
+#include <cuda.h>
+#include <iostream>
 /**
  * @file poly_2b_A1B2Z2_A1B2Z2_deg4_nograd_vh2o_revPBE0_def2svpd.cpp
  * @brief Contains the implementation of the polynomials without gradients for symmetry A1B2Z2_A1B2Z2
@@ -63,41 +64,11 @@ device_memory devmem;
 
 __constant__ device_memory d_devmem;
 
-namespace mbnrg_A1B2Z2_A1B2Z2_deg4 {
-
-
-__host__ double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double x[31], const double a[1208])
-{
-
-    double energy = 0.0;
-    double *denergy;
-
-    safeMalloc((void**)&devmem.devx, 31*sizeof(double));
-    safeMalloc((void**)&devmem.deva, 1208*sizeof(double));
-    safeMalloc((void**)&denergy, sizeof(double));
-
-    cudaMemcpy(devmem.devx, x, 31*sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(devmem.deva, a, 1208*sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(denergy, energy, sizeof(double), cudaMemcpyHostToDevice);
-
-    cudaMemcpyToSymbol(d_devmem.devx, devmem.devx, sizeof(double*));
-    cudaMemcpyToSymbol(d_devmem.deva, devmem.deva, sizeof(double*));
-
-    kernel_2B<<<14,64>>>(denergy);
-
-    cudaMemcpy(energy, denergy, sizeof(double), cudaMemcpyDeviceToHost);
-
-    cudaFree(devmem.devx);
-    cudaFree(devmem.deva);
-    cudaFree(denergy);
-};
-
-__global__ void kernel_2B(double *denergy){
+__global__ void kernel_2B(double *denergy, const double* x){
     unsigned int tid = blockIdx.x * blockDim.x + threadIdx.x;
     unsigned int nthreads = blockDim.x * gridDim.x;
 
     for (unsigned int i = tid; i < 1208; i += nthreads){
-
         switch(i){
            case 0: atomicAdd(denergy,x[6] + x[5] + x[11] + x[12]);
            case 1: atomicAdd(denergy,x[8] + x[3] + x[7] + x[4]);
@@ -1310,5 +1281,38 @@ __global__ void kernel_2B(double *denergy){
         };
     };
 
-}; // namespace mbnrg_A1B2Z2_A1B2Z2_deg4
+};
+namespace mbnrg_A1B2Z2_A1B2Z2_deg4 {
 
+
+double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double x[31], const double a[1208])
+{
+
+    double energy = 0.0;
+    double *denergy;
+
+    std::cout << "Launching the kernel" << std::endl;
+
+    safeMalloc((void**)&devmem.devx, 31*sizeof(double));
+    safeMalloc((void**)&devmem.deva, 1208*sizeof(double));
+    safeMalloc((void**)&denergy, sizeof(double));
+
+    cudaMemcpy(devmem.devx, x, 31*sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(devmem.deva, a, 1208*sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(denergy, &energy, sizeof(double), cudaMemcpyHostToDevice);
+
+    cudaMemcpyToSymbol(d_devmem.devx, devmem.devx, sizeof(double*));
+    cudaMemcpyToSymbol(d_devmem.deva, devmem.deva, sizeof(double*));
+
+    kernel_2B<<<14,64>>>(denergy, devmem.devx);
+
+    cudaMemcpy(&energy, denergy, sizeof(double), cudaMemcpyDeviceToHost);
+
+    cudaFree(devmem.devx);
+    cudaFree(devmem.deva);
+    cudaFree(denergy);
+
+    return energy;
+};
+
+}; // namespace mbnrg_A1B2Z2_A1B2Z2_deg4

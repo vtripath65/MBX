@@ -35,6 +35,8 @@ SOFTWARE WILL NOT INFRINGE ANY PATENT, TRADEMARK OR OTHER RIGHTS.
 
 #include "poly_2b_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd.h"
 
+#include <iostream>
+
 /**
  * @file poly_2b_A1B2Z2_A1B2Z2_deg4_nograd_vh2o_revPBE0_def2svpd.cpp
  * @brief Contains the implementation of the polynomials without gradients for symmetry A1B2Z2_A1B2Z2
@@ -49,6 +51,7 @@ namespace mbnrg_A1B2Z2_A1B2Z2_deg4 {
 
 double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval(const double x[31],
             const double a[1208]) {
+    std::cout << "inside eval" << std::endl;
     const double t2 = a[8];
     const double t3 = a[896];
     const double t5 = a[56];

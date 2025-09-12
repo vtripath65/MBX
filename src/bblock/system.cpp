@@ -2073,17 +2073,17 @@ double System::Energy(bool do_grads) {
     auto t31 = std::chrono::high_resolution_clock::now();
 #endif
 
-    // double e3b = 0.0;
-    double e3b = Get3B(do_grads);
+    double e3b = 0.0;
+//    double e3b = Get3B(do_grads);
 
 #ifdef TIMING
     auto t32 = std::chrono::high_resolution_clock::now();
 #endif
 
     double e4b = 0.0;
-    if (cutoff4b_ > std::numeric_limits<double>::epsilon()) {
-        e4b = Get4B(do_grads);
-    }
+//    if (cutoff4b_ > std::numeric_limits<double>::epsilon()) {
+//        e4b = Get4B(do_grads);
+//    }
 
 #ifdef TIMING
     auto t4 = std::chrono::high_resolution_clock::now();
@@ -2795,7 +2795,7 @@ double System::Get3B(bool do_grads, bool use_ghost) {
 
     // Vector pools that allow compatibility between
     // serial and parallel implementation
-    std::vector<double> e3b_pool(num_threads, 0.0);
+//    std::vector<double> e3b_pool(num_threads, 0.0);
     std::vector<std::vector<double>> grad_pool(num_threads);
     std::vector<std::vector<double>> virial_pool(num_threads);  // declare virial pool
 
@@ -2967,7 +2967,7 @@ double System::Get3B(bool do_grads, bool use_ghost) {
                         std::vector<double> virial(9, 0.0);  // declare virial tensor
                         // POLYNOMIALS
 
-                        e3b_pool[rank] += e3b::get_3b_energy(m1, m2, m3, nt, xyz1, xyz2, xyz3, grad1, grad2, grad3, &virial);
+//                        e3b_pool[rank] += e3b::get_3b_energy(m1, m2, m3, nt, xyz1, xyz2, xyz3, grad1, grad2, grad3, &virial);
 
                         cur_profile_index += 1;
 
@@ -2995,9 +2995,9 @@ double System::Get3B(bool do_grads, bool use_ghost) {
                             virial_pool[rank][j] += virial[j];
                         }
 
-                    } else {
+//                    } else {
                         // POLYNOMIALS
-                        e3b_pool[rank] += e3b::get_3b_energy(m1, m2, m3, nt, xyz1, xyz2, xyz3);
+//                        e3b_pool[rank] += e3b::get_3b_energy(m1, m2, m3, nt, xyz1, xyz2, xyz3);
                     }
                 }
 
@@ -3059,9 +3059,9 @@ double System::Get3B(bool do_grads, bool use_ghost) {
 #endif
 
     // Condensate energy
-    for (int i = 0; i < num_threads; i++) {
-        e3b_t += e3b_pool[i];
-    }
+//    for (int i = 0; i < num_threads; i++) {
+//        e3b_t += e3b_pool[i];
+//    }
     // Condensate virial
     for (int i = 0; i < num_threads; i++) {
         for (size_t j = 0; j < 9; j++) {
@@ -3099,7 +3099,7 @@ double System::Get4B(bool do_grads, bool use_ghost) {
 
     // Vector pools that allow compatibility between
     // serial and parallel implementation
-    std::vector<double> e4b_pool(num_threads, 0.0);
+//    std::vector<double> e4b_pool(num_threads, 0.0);
     std::vector<std::vector<double>> grad_pool(num_threads, std::vector<double>(3 * numsites_, 0.0));
     std::vector<std::vector<double>> virial_pool(num_threads, std::vector<double>(9, 0.0));  // declare virial pool
 
@@ -3164,10 +3164,10 @@ double System::Get4B(bool do_grads, bool use_ghost) {
                     std::vector<double> virial(9, 0.0);  // declare virial tensor
 
                     // POLYNOMIALS
-                    double e = e4b::get_4b_energy(ms[0], ms[1], ms[2], ms[3], 1, coords[0], coords[1], coords[2],
-                                                  coords[3], grad[0], grad[1], grad[2], grad[3], &virial);
+//                    double e = e4b::get_4b_energy(ms[0], ms[1], ms[2], ms[3], 1, coords[0], coords[1], coords[2],
+//                                                  coords[3], grad[0], grad[1], grad[2], grad[3], &virial);
 
-                    e4b_pool[rank] += e;
+//                    e4b_pool[rank] += e;
 
                     // Update gradients
                     for (size_t n = 0; n < 4; n++) {
@@ -3180,11 +3180,11 @@ double System::Get4B(bool do_grads, bool use_ghost) {
                         virial_pool[rank][j] += virial[j];
                     }
 
-                } else {
+//                } else {
                     // POLYNOMIALS
-                    double e =
-                        e4b::get_4b_energy(ms[0], ms[1], ms[2], ms[3], 1, coords[0], coords[1], coords[2], coords[3]);
-                    e4b_pool[rank] += e;
+//                    double e =
+//                        e4b::get_4b_energy(ms[0], ms[1], ms[2], ms[3], 1, coords[0], coords[1], coords[2], coords[3]);
+//                    e4b_pool[rank] += e;
                 }
             }
         }
@@ -3217,9 +3217,9 @@ double System::Get4B(bool do_grads, bool use_ghost) {
 #endif
 
     // Condensate energy
-    for (int i = 0; i < num_threads; i++) {
-        e4b_t += e4b_pool[i];
-    }
+//    for (int i = 0; i < num_threads; i++) {
+//        e4b_t += e4b_pool[i];
+//    }
     // Condensate virial
     for (int i = 0; i < num_threads; i++) {
         for (size_t j = 0; j < 9; j++) {

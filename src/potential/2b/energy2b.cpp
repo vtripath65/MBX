@@ -272,7 +272,7 @@ double get_2b_energy(std::string mon1, std::string mon2, size_t nm, std::vector<
         x2o::x2b_v9x pot;
         energy = pot.eval(xyz1.data(), xyz2.data(), grad1.data(), grad2.data(), nm, virial);
 //VTS
-        std::cerr << "2B energy = " << energy << " ,nm = " << nm << std::endl;
+//        std::cerr << "2B energy = " << energy << " ,nm = " << nm << std::endl;
 //VTE
     } else if (mon1 == "cs+" and mon2 == "h2o") {
         // The order is bc the poly were generated this way
@@ -388,9 +388,9 @@ double get_2b_energy(std::string mon1, std::string mon2, size_t nm, std::vector<
         mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot(mon1,mon2);
         energy=pot.eval(xyz1.data(), xyz2.data(), grad1.data(), grad2.data(), nm, virial);
 //VTS
-        std::cerr << "2B energy = " << energy << " ,nm = " << nm << std::endl;
+//        std::cerr << "2B energy = " << energy << " ,nm = " << nm << std::endl;
         time_cum += time_cum+((double)(clock() - time_start))/CLOCKS_PER_SEC;
-        std::cerr << "duration  of optimized = " << time_cum << " sec" << std::endl;
+//        std::cerr << "duration  of optimized = " << time_cum << " sec" << std::endl;
 //VTE
     } else if (mon1 == "h2o_revpbe0d3_def2svpd_dir" and mon2 == "h2o_revpbe0d3_def2svpd_dir") {
 //VTS
@@ -399,9 +399,9 @@ double get_2b_energy(std::string mon1, std::string mon2, size_t nm, std::vector<
         mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot(mon1,mon2);
         energy=pot.eval_direct(xyz1.data(), xyz2.data(), grad1.data(), grad2.data(), nm, virial);
 //VTS
-        std::cerr << "2B energy = " << energy << " ,nm = " << nm << std::endl;
+//        std::cerr << "2B energy = " << energy << " ,nm = " << nm << std::endl;
         time_cum += time_cum+((double)(clock() - time_start))/CLOCKS_PER_SEC;
-        std::cerr << "duration  of direct = " << time_cum << " sec" << std::endl;
+//        std::cerr << "duration  of direct = " << time_cum << " sec" << std::endl;
 //VTE
         // =====>> BEGIN SECTION 2B_GRADIENT <<=====
         // ====>> PASTE YOUR CODE BELOW <<====

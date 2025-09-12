@@ -636,7 +636,7 @@ std::vector<double> pot_nasa(const double* rr, double* dr, size_t nw, std::vecto
 #endif
 
 //VTS
-    std::cerr << "Single point energy =";
+//    std::cerr << "Single point energy =";
     for (size_t j = 0; j < nw; j++) {
         std::cerr << tot_e[j] << std::endl;
     };
