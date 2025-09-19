@@ -59,6 +59,7 @@ struct device_memory_grad{
   double* devx;
   double* deva;
   double* devg;
+  double* denergy;
 };
 
 device_memory_grad devmemgrad;
@@ -68,41 +69,55 @@ device_memory_grad devmemgrad;
 
 namespace mbnrg_A1B2Z2_A1B2Z2_deg4 {
 
+void poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::gpu_upload(const double a[1208]){
+    safeMalloc((void**)&devmemgrad.devx, n_vars*sizeof(double));
+    safeMalloc((void**)&devmemgrad.deva, size*sizeof(double));
+    safeMalloc((void**)&devmemgrad.devg, n_vars*sizeof(double));
+    safeMalloc((void**)&devmemgrad.denergy, sizeof(double));
+
+    cudaMemcpy(devmemgrad.deva, a, size*sizeof(double), cudaMemcpyHostToDevice);
+};
+
+void poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::gpu_free(){
+    cudaFree(devmemgrad.devx);
+    cudaFree(devmemgrad.deva);
+    cudaFree(devmemgrad.devg);
+    cudaFree(devmemgrad.denergy);
+};
 
 double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double x[31], const double a[1208], double g[31])
 {
 
     double energy = 0.0;
-    double *denergy;
 
     std::fill(g, g + 31, 0.0);
 
 //    std::cout << "Launching the kernel" << std::endl;
 
-    safeMalloc((void**)&devmemgrad.devx, 31*sizeof(double));
-    safeMalloc((void**)&devmemgrad.deva, 1208*sizeof(double));
-    safeMalloc((void**)&devmemgrad.devg, 31*sizeof(double));
-    safeMalloc((void**)&denergy, sizeof(double));
+//    safeMalloc((void**)&devmemgrad.devx, 31*sizeof(double));
+//    safeMalloc((void**)&devmemgrad.deva, 1208*sizeof(double));
+//    safeMalloc((void**)&devmemgrad.devg, 31*sizeof(double));
+//    safeMalloc((void**)&denergy, sizeof(double));
 
     cudaMemcpy(devmemgrad.devx, x, 31*sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(devmemgrad.deva, a, 1208*sizeof(double), cudaMemcpyHostToDevice);
+//    cudaMemcpy(devmemgrad.deva, a, 1208*sizeof(double), cudaMemcpyHostToDevice);
     cudaMemcpy(devmemgrad.devg, g, 31*sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(denergy, &energy, sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(devmemgrad.denergy, &energy, sizeof(double), cudaMemcpyHostToDevice);
 
 //    cudaMemcpyToSymbol(d_devmemgrad.devx, devmemgrad.devx, sizeof(double*));
 //    cudaMemcpyToSymbol(d_devmemgrad.deva, devmemgrad.deva, sizeof(double*));
 //    cudaMemcpyToSymbol(d_devmemgrad.devg, devmemgrad.devg, sizeof(double*));
 
-    kernel_2B<<<14,256>>>(denergy, devmemgrad.devx, devmemgrad.deva, devmemgrad.devg);
+    kernel_2B<<<92,128>>>(devmemgrad.denergy, devmemgrad.devx, devmemgrad.deva, devmemgrad.devg);
 //    cudaDeviceSynchronize();
 
-    cudaMemcpy(&energy, denergy, sizeof(double), cudaMemcpyDeviceToHost);
+    cudaMemcpy(&energy, devmemgrad.denergy, sizeof(double), cudaMemcpyDeviceToHost);
     cudaMemcpy(g, devmemgrad.devg, 31*sizeof(double), cudaMemcpyDeviceToHost);
 
-    cudaFree(devmemgrad.devx);
-    cudaFree(devmemgrad.deva);
-    cudaFree(devmemgrad.devg);
-    cudaFree(denergy);
+//    cudaFree(devmemgrad.devx);
+//    cudaFree(devmemgrad.deva);
+//    cudaFree(devmemgrad.devg);
+//    cudaFree(denergy);
 
 //    cudaDeviceReset();
 

@@ -4,6 +4,8 @@ __global__ void kernel_2B(double *denergy, const double* x, const double* a, dou
     unsigned int tid = blockIdx.x * blockDim.x + threadIdx.x;
     unsigned int nthreads = blockDim.x * gridDim.x;
 
+//    printf("x[0]:  %f ,a[0]:  %f ,g[0]: %f ,denergy: %f ", x[0], a[0], g[0], *denergy);
+
     for (unsigned int i = tid; i < 15621; i += nthreads){
         if (i < 1208){
             switch(i){

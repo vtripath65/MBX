@@ -111,6 +111,11 @@ struct poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd {
     double eval_direct(const double x[31],
                      const double a[1208],
                            double g[31]);
+
+    void gpu_upload(const double a[1208]);
+
+    void gpu_free();
+
 };
 
 } // namespace mbnrg_A1B2Z2_A1B2Z2_deg4

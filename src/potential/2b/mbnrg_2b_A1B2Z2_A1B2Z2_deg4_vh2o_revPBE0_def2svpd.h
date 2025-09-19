@@ -154,6 +154,7 @@ urns a vector with them.
     // Switch function
     double f_switch(const double, double&);
 
+  public:
     // Vector with the coefficients of the polynomials
     std::vector<double> coefficients;
 };

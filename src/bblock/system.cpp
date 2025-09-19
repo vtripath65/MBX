@@ -34,6 +34,7 @@ SOFTWARE WILL NOT INFRINGE ANY PATENT, TRADEMARK OR OTHER RIGHTS.
 
 #include "system.h"
 #include "../potential/3b/x3b-v2x.h"
+#include "../potential/2b/poly_2b_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd.h"
 
 //#define DEBUG
 //#define TIMING
@@ -2546,6 +2547,10 @@ double System::Get2B(bool do_grads, bool use_ghost) {
             m2 = monomers_[dimers[1]];
         }
 
+        mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot(m1,m2);
+        mbnrg_A1B2Z2_A1B2Z2_deg4::poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd dummy_poly;
+        dummy_poly.gpu_upload(pot.coefficients.data());
+
         // Initialize the iteration variables
         size_t i = 0;
         size_t nd = 0;
@@ -2586,6 +2591,7 @@ double System::Get2B(bool do_grads, bool use_ghost) {
             // type exist. Thus, do calculation, update m? and clear xyz
             if (monomers_[dimers[i]] != m1 || monomers_[dimers[i + 1]] != m2 || i == dimers.size() - 2 ||
                 nd == maxNDimEval_ || !m1_is_good || !m2_is_good) {
+//                std::cout << "inside the if loop" << std::endl;
                 if (nd == 0) {
                     xyz1.clear();
                     xyz2.clear();
@@ -2628,6 +2634,7 @@ double System::Get2B(bool do_grads, bool use_ghost) {
                         }
                         // Update gradients in system
                         size_t i0 = nd_tot * 2;
+//                        std::cout << "nd_tot = " << nd_tot << std::endl;
                         for (size_t k = 0; k < nd; k++) {
                             // Monomer 1
                             for (size_t j = 0; j < 3 * nat_[dimers[i0 + 2 * k]]; j++) {
@@ -2720,6 +2727,8 @@ double System::Get2B(bool do_grads, bool use_ghost) {
             virial_[j] += scalev * virial_pool[i][j];
         }
     }
+
+//        dummy_poly.gpu_free();
 
     return e2b_t;
 }

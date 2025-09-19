@@ -1778,6 +1778,7 @@ double mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double 
         const double d12r = std::sqrt(d12rsq);
 
         if (true  && d12r > m_ro ) {
+//             std::cout << "exclude this" << std::endl;
              continue;
         }
 
