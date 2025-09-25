@@ -33,7 +33,7 @@ MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, OR THAT THE USE OF THE
 SOFTWARE WILL NOT INFRINGE ANY PATENT, TRADEMARK OR OTHER RIGHTS.
 ******************************************************************************/
 
-
+#include <array>
 
 #ifndef POLY_2B_MBNRG_A1B2Z2_A1B2Z2_DEG4_H
 #define POLY_2B_MBNRG_A1B2Z2_A1B2Z2_DEG4_H
@@ -112,7 +112,9 @@ struct poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd {
                      const double a[1208],
                            double g[31]);
 
+
     void gpu_upload(const double a[1208]);
+    void gpu_upload_xyz(const double* xyz, int mons);
 
     void gpu_free();
 

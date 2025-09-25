@@ -2488,6 +2488,11 @@ double System::Get2B(bool do_grads, bool use_ghost) {
         all_dimers[i].clear();
     }
 
+//    for(size_t i = 0; i < dimers_pool.size(); i++) {
+//        std::cout << dimers_pool[i] << std::endl;
+//    }
+//    std::cout << xyz_.size() << std::endl;
+
     size_t dimers_pool_index = 0;
 
     // this variable is the maximum number of dimers that will be dispached to a thread at a time.
@@ -2495,6 +2500,11 @@ double System::Get2B(bool do_grads, bool use_ghost) {
     // should probably be a multiple of 8 for compatibility with uncoming SIMD PIP evaluation.
     const size_t batch_size = 8;
     const size_t batch_size_factor = 8;
+
+    mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot("h2o_revpbe0d3_def2svpd_dir","h2o_revpbe0d3_def2svpd_dir");
+    mbnrg_A1B2Z2_A1B2Z2_deg4::poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd dummy_poly;
+    dummy_poly.gpu_upload(pot.coefficients.data());
+    dummy_poly.gpu_upload_xyz(xyz_.data(), monomers_.size());
 
     // actually calculate the dimers
 #ifdef _OPENMP
@@ -2546,10 +2556,6 @@ double System::Get2B(bool do_grads, bool use_ghost) {
             m1 = monomers_[dimers[0]];
             m2 = monomers_[dimers[1]];
         }
-
-        mbnrg_A1B2Z2_A1B2Z2_deg4::mbnrg_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd pot(m1,m2);
-        mbnrg_A1B2Z2_A1B2Z2_deg4::poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd dummy_poly;
-        dummy_poly.gpu_upload(pot.coefficients.data());
 
         // Initialize the iteration variables
         size_t i = 0;

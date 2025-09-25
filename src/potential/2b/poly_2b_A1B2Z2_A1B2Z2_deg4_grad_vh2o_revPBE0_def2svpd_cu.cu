@@ -60,6 +60,7 @@ struct device_memory_grad{
   double* deva;
   double* devg;
   double* denergy;
+  double* dxyz;
 };
 
 device_memory_grad devmemgrad;
@@ -76,6 +77,12 @@ void poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::gpu_upload(const double a[12
     safeMalloc((void**)&devmemgrad.denergy, sizeof(double));
 
     cudaMemcpy(devmemgrad.deva, a, size*sizeof(double), cudaMemcpyHostToDevice);
+};
+
+void poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::gpu_upload_xyz(const double* xyz, int mons){
+    safeMalloc((void**)&devmemgrad.dxyz, 3*mons*sizeof(double));
+
+    cudaMemcpy(devmemgrad.dxyz, xyz, 3*mons*sizeof(double), cudaMemcpyHostToDevice);
 };
 
 void poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::gpu_free(){
@@ -108,7 +115,7 @@ double poly_A1B2Z2_A1B2Z2_deg4_vh2o_revPBE0_def2svpd::eval_direct(const double x
 //    cudaMemcpyToSymbol(d_devmemgrad.deva, devmemgrad.deva, sizeof(double*));
 //    cudaMemcpyToSymbol(d_devmemgrad.devg, devmemgrad.devg, sizeof(double*));
 
-    kernel_2B<<<92,128>>>(devmemgrad.denergy, devmemgrad.devx, devmemgrad.deva, devmemgrad.devg);
+    kernel_2B<<<92,128>>>(devmemgrad.denergy, devmemgrad.devx, devmemgrad.deva, devmemgrad.devg, devmemgrad.dxyz);
 //    cudaDeviceSynchronize();
 
     cudaMemcpy(&energy, devmemgrad.denergy, sizeof(double), cudaMemcpyDeviceToHost);

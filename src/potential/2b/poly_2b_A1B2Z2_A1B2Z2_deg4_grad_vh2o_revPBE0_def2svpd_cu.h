@@ -1,10 +1,14 @@
 #include <iostream>
 
-__global__ void kernel_2B(double *denergy, const double* x, const double* a, double* g){
+__global__ void kernel_2B(double *denergy, const double* x, const double* a, double* g, double* xyz){
     unsigned int tid = blockIdx.x * blockDim.x + threadIdx.x;
     unsigned int nthreads = blockDim.x * gridDim.x;
 
-//    printf("x[0]:  %f ,a[0]:  %f ,g[0]: %f ,denergy: %f ", x[0], a[0], g[0], *denergy);
+    if (tid==0){
+        for (unsigned int i = 0; i < 10; i++){
+            printf("xyz[%d]:  %f \n", i, xyz[i]);
+        };
+    };
 
     for (unsigned int i = tid; i < 15621; i += nthreads){
         if (i < 1208){
